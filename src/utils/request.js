@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
@@ -10,6 +11,10 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
   // 添加 icode
   config.headers.icode = '642F3B4A7C2CF79A'
+  // 请求头添加 token
+  if (store.getters.token) {
+    config.headers.Authorization = `Bearer ${store.getters.token}`
+  }
   return config
 })
 
@@ -28,7 +33,14 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    // 将来处理 token 超时问题
+    // 处理 token 超时问题
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
+      store.dispatch('user/logout')
+    }
     ElMessage.error(error.message)
     return Promise.reject(error)
   }

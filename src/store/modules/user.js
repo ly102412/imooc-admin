@@ -1,18 +1,23 @@
-import { login } from '@/api/sys'
+import { getUserInfo, login } from '@/api/sys'
 import { Promise } from 'core-js'
-import { setItem, getItem } from '@/utils/storage'
+import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 import md5 from 'md5'
+import router from '@/router'
 
 export default {
   namespaced: true,
   state: () => ({
-    token: getItem(TOKEN) || ''
+    token: getItem(TOKEN) || '',
+    userInfo: {}
   }),
   mutations: {
     setToken(state, token) {
       state.token = token
       setItem(TOKEN, token)
+    },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   actions: {
@@ -31,6 +36,19 @@ export default {
             reject(err)
           })
       })
+    },
+    // 获取用户信息
+    async getUserInfo(context) {
+      const res = await getUserInfo()
+      this.commit('user/setUserInfo', res)
+      return res
+    },
+    // 退出登录
+    logout() {
+      this.commit('user/setToken', '')
+      this.commit('user/setUserInfo', {})
+      removeAllItem()
+      router.push('/login')
     }
   }
 }

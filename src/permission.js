@@ -7,11 +7,15 @@ const whiteList = ['/login']
 /**
  * 路由前置守卫
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (store.getters.token) {
     if (to.path === '/login') {
       next('/')
     } else {
+      // 判断是否存在用户数据
+      if (!store.getters.hasUserInfo) {
+        await store.dispatch('user/getUserInfo')
+      }
       next()
     }
   } else {
