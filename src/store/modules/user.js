@@ -1,5 +1,4 @@
 import { getUserInfo, login } from '@/api/sys'
-import { Promise } from 'core-js'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 import md5 from 'md5'
