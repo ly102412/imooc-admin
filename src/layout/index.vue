@@ -6,7 +6,7 @@
     <!-- 左侧 menu -->
     <SideBar
       class="sidebar-container"
-      :style="{ backgroundColor: variables.menuBg }"
+      :style="{ backgroundColor: $store.getters.cssVar.menuBg }"
     ></SideBar>
     <div class="main-container">
       <div class="fixed-header">
@@ -22,7 +22,6 @@
 import Navbar from './components/Navbar/index.vue'
 import SideBar from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain/index.vue'
-import variables from '@/styles/variables.module.scss'
 </script>
 
 <style lang="scss" scoped>

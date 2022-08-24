@@ -3,6 +3,7 @@
     <hamburger class="hamburger_container"></hamburger>
     <breadcrumb class="breadcrumb-container"></breadcrumb>
     <div class="right-menu">
+      <theme-picker class="right-menu-item hover-effect"></theme-picker>
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -32,6 +33,7 @@
 import { useStore } from 'vuex'
 import Hamburger from '@/components/Hamburger/index.vue'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
+import ThemePicker from '@/components/ThemeSelect/index.vue'
 
 // 退出登录
 const store = useStore()
@@ -65,6 +67,23 @@ const logout = () => {
     align-items: center;
     float: right;
     padding-right: 16px;
+
+    ::v-deep .right-menu-item {
+      display: inline-block;
+      margin-right: 18px;
+      font-size: 24px;
+      color: #5a5e66;
+      vertical-align: text-bottom;
+
+      &.hover-effect {
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.025);
+        }
+      }
+    }
 
     ::v-deep .avatar-container {
       cursor: pointer;
